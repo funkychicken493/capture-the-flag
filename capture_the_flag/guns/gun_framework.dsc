@@ -1,17 +1,32 @@
-copper_revolver:
+placeholder_revolver:
     type: item
     material: wooden_hoe
     mechanisms:
         unbreakable: false
         hides: enchants|attributes|unbreakable
-    display name: <gold>Copper Revolver
+    display name: <gold>Placeholder Revolver
     enchantments:
         - unbreaking:1
     flags:
-        gun_item: true
-        revolver: true
+        gun:
+            type: revolver
+            fire_sound_path: generic
+            #Time between shots in seconds
+            firerate: 1.0
+            #Bullet damage
+            damage: 10
+            #Bullet spread
+            spread: 0.01
+            #Bullet count
+            count: 1
+            #Shots per clip
+            clip: 6
+            #Reload time in seconds
+            reload: 2.0
+            #Reload sound path
+            reload_sound_path: generic
 
-copper_revolver_events:
+gun_revolver:
     type: world
     debug: true
     events:
