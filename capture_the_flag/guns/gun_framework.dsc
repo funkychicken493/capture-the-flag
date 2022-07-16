@@ -1,10 +1,10 @@
-placeholder_revolver:
+default_revolver:
     type: item
     material: wooden_hoe
     mechanisms:
         unbreakable: false
         hides: enchants|attributes|unbreakable
-    display name: <gold>Placeholder Revolver
+    display name: <gold>Default Revolver
     enchantments:
         - unbreaking:1
     flags:
@@ -26,7 +26,7 @@ placeholder_revolver:
             #Reload sound path
             reload_sound_path: generic
 
-gun_revolver:
+gun_events:
     type: world
     debug: true
     events:
