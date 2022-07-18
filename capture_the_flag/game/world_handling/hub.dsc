@@ -34,3 +34,4 @@ hub_events:
             - if <player.location.world> == <world[hub]>:
                 - determine passively cancelled
                 - teleport <player> hub_spawn
+#Hub World was created by ASlightlyOvergrownCactus / Overgrown_Cactus
