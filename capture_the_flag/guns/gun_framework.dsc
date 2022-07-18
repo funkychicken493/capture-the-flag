@@ -92,7 +92,9 @@ default_shotgun:
             #Reload time in seconds
             reload: 2.0
             #Reload sound path
-            reload_sound_path: generic_shotgun
+            reload_start_sound_path: generic_shotgun
+            #Reload complete sound path
+            reload_end_sound_path: generic_shotgun
 
 gun_events:
     type: world
@@ -114,22 +116,29 @@ gun_events:
             - define bullet_range <[gun].get[range]>
             - define bullets_per_shot <[gun].get[count]>
             - define fire_sound_path <[gun].get[fire_sound_path]>
+            - define clip_size <[gun].get[clip]>
 
-            - define gun_data <[gun].get[gun_data]>
+            - define gun_data <context.item.flag[gun_data]>
             - define bullets_left <[gun_data].get[bullets_left]>
             - if <[bullets_left]> == 0:
-                - title <red>RELOAD 1s targets:<player>
+                - title title:<red>RELOAD 1s targets:<player> fade_in:1t
+                - actionbar "<red><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
                 - playsound <player> sound:entity_villager_no pitch:<element[1.5].mul[<util.random.int[0.5].to[1.5]>]>
                 - stop
 
             - itemcooldown <context.item.material> duration:<[firerate]>s
+            - inventory flag slot:hand gun_data.bullets_left:<[bullets_left].sub[1]>
+            - if <[bullets_left]> != 0:
+                - actionbar "<green><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
+            - else:
+                - actionbar "<red><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
 
             - inject gun_sounds path:<[fire_sound_path]>
 
             - repeat <[bullets_per_shot]>:
                 - define hit <player.eye_location.ray_trace[range=<[bullet_range]>;ignore=<player>;entities=*;fluids=true;nonsolids=true].if_null[null]>
                 - if <[hit]> == null:
-                    - repeat next
+                    - define hit <player.eye_location.forward[<[bullet_range]>]>
                 - if <[bullet_spread]> != 0:
                     - define hit <[hit].random_offset[<[bullet_spread]>,<[bullet_spread]>,<[bullet_spread]>]>
                 - playeffect effect:crit offset:0 at:<player.eye_location.points_between[<[hit].forward[0.1]>].distance[0.4]>
@@ -137,13 +146,45 @@ gun_events:
                     - if <[entity].is_living>:
                         - hurt <[damage]> <[entity]> source:<player>
 
+        on player left clicks block:
+            - define item <player.item_in_hand>
+            - if !<[item].has_flag[gun]>:
+                - stop
+
+            - if <player.item_cooldown[<[item].material>].in_ticks> > 0:
+                - stop
+
+            - determine passively cancelled
+
+            - define gun <[item].flag[gun]>
+            - define clip_size <[gun].get[clip]>
+            - define reload_time <[gun].get[reload]>
+            - define reload_sound_path <[gun].get[reload_start_sound_path]>
+            - define reload_end_sound_path <[gun].get[reload_end_sound_path]>
+
+            - define gun_data <[item].flag[gun_data]>
+            - define bullets_left <[gun_data].get[bullets_left]>
+
+            - if <[bullets_left]> == <[clip_size]>:
+                - stop
+
+            - title title:<yellow>RELOADING... 1s targets:<player> fade_in:1t
+            - inject gun_sounds path:<[reload_sound_path]>
+            - itemcooldown <[item].material> duration:<[reload_time]>s
+            - inventory flag slot:hand gun_data.bullets_left:<[clip_size]>
+            - actionbar "<green><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
+            - wait <[reload_time]>s
+            - title title:<green>RELOADED 1s targets:<player> fade_in:1t
+            - inject gun_sounds path:<[reload_end_sound_path]>
+
 gun_bullet_counter:
     type: world
     debug: false
     events:
         after player holds item:
             - define item <player.inventory.slot[<context.new_slot>]>
-            - if !<[item].has_flag[gun]>:
+            - if !<[item].has_flag[gun].if_null[false]>:
+                - actionbar <empty>
                 - stop
             - define gun_data <[item].flag[gun_data]>
             - define gun <[item].flag[gun]>
