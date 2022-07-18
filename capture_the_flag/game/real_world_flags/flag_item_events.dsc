@@ -23,3 +23,28 @@ flagpost_events:
     events:
         on player drops flagpost_*:
             - narrate "cope "
+
+flagpost_get_flag:
+    type: world
+    debug: true
+    events:
+        on player breaks block:
+            - if <context.location.has_flag[flagpost_blue]>:
+                - narrate "we do a little trolling (blue sus)"
+                - determine passively NOTHING
+                - give flag_blue
+                - flag player flag_held
+            - else if <context.location.has_flag[flagpost_red]>:
+                - narrate "we do a little trolling (red sus)"
+                - determine passively NOTHING
+                - give flag_red
+                - flag player flag_held
+            - else:
+                - narrate "Error"
+flag_player_prevent:
+    type: world
+    debug: true
+    events:
+        on player opens inventory:
+        - if <player.has_flag[flag_held]>:
+            - determine cancelled
