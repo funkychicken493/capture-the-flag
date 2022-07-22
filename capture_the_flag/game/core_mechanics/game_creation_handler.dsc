@@ -8,7 +8,6 @@ game_creation_handler:
         - inject world_creation_handler
         - wait 3s
         - narrate "<&5><element[World Created!].on_hover[<&7><[world_uuid]>]>"
-        - narrate "<&5>Teleporting you to the world..."
+        - narrate "<&5>Teleporting you to your world..."
         - teleport <player> <location[0,100,0,ctfinstances/<[world_uuid]>]>
-        - narrate "<&5>Teleported! Welcome to your world!"
-        - narrate "<&5>You are the host."
+        - narrate "<&5>Teleported! Welcome to your world!<&nl>You are the host."

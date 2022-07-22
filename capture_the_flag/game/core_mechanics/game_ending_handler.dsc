@@ -6,7 +6,7 @@ game_ending_handler:
         - narrate "Game Over!" targets:<[world].players>
         - teleport <[world].players> hub_spawn
         - wait 3s
-        - adjust <[world]> destroy
+        - ~adjust <[world]> destroy
 
 game_ending_handler_debug:
     type: command
