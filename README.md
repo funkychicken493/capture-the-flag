@@ -1,2 +1,3 @@
-# ctf-scripts
- capture the flag or something
+# Capture The Flag
+
+ill write this shit later im not in the mood
