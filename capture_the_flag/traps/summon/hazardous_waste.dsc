@@ -11,8 +11,7 @@ hazardous_waste:
     enchantments:
         - unbreaking:1
     flags:
-        #Redundant flag, doesn't do anything. Should be removed.
-        hazardous_waste: true
+        trap: hazardous_waste
 
 #Events for the hazardous waste trap.
 hazardous_waste_events:
@@ -21,20 +20,12 @@ hazardous_waste_events:
     events:
         on player places hazardous_waste:
             #Identify the location as a trap on placement
-            - flag <context.location> hazardous_waste
-            - flag <context.location> trap
-        on noteblock plays note location_flagged:hazardous_waste:
+            - flag <context.location> trap.hazardous_waste
+        on noteblock plays note location_flagged:trap.hazardous_waste:
             - determine passively cancelled
 
-            #Remove identifying flags from the location
-            - flag <context.location> hazardous_waste:!
             - flag <context.location> trap:!
-
-            #Remove the note block
             - modifyblock <context.location> air
-
-            #Plays a sound effect when activated
-            #Sound effect is the same as boom box trap, should be changed.
             - playsound <context.location> sound:block_wood_break volume:2
 
             #Spawns a zombie army of 5 at the location
@@ -43,22 +34,3 @@ hazardous_waste_events:
                 - spawn zombie <context.location.center> target:<context.location.find_players_within[50].get[1].if_null[]>
                 - playsound <context.location> sound:entity_zombie_break_wooden_door pitch:1 volume:2
                 - wait 1s
-        #Stop block from burning
-        on block burns location_flagged:hazardous_waste:
-            - determine cancelled
-        #Redundant event, might be removed.
-        on block ignites location_flagged:hazardous_waste:
-            - determine cancelled
-        #Stops the trap from being pushed/pulled by a piston
-        on piston extends:
-            - foreach <context.blocks>:
-                - if <[value].has_flag[hazardous_waste]>:
-                    - determine cancelled
-        on piston retracts:
-            - foreach <context.blocks>:
-                - if <[value].has_flag[hazardous_waste]>:
-                    - determine cancelled
-        #Destroy the trap properly when it is blown up
-        on block destroyed by explosion location_flagged:hazardous_waste:
-            - flag <context.location> hazardous_waste:!
-            - flag <context.location> trap:!

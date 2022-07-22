@@ -11,8 +11,7 @@ dusty_waste:
     enchantments:
         - unbreaking:1
     flags:
-        #Redundant flag, should be removed soon
-        dusty_waste: true
+        trap: dusty_waste
 
 #Events for the dusty waste trap
 dusty_waste_events:
@@ -21,20 +20,13 @@ dusty_waste_events:
     events:
         on player places dusty_waste:
             #Identify the trap as a trap for use in other events
-            - flag <context.location> dusty_waste
-            - flag <context.location> trap
+            - flag <context.location> trap.dusty_waste
         #When the block is right clicked or pulsed, the trap is activated
-        on noteblock plays note location_flagged:dusty_waste:
+        on noteblock plays note location_flagged:trap.dusty_waste:
             - determine passively cancelled
 
-            #Remove identity flags of the trap location
-            - flag <context.location> dusty_waste:!
             - flag <context.location> trap:!
-
-            #Remove the trap block
             - modifyblock <context.location> air
-
-            #Play sound effect when activated, same as boom box trap, need to change this
             - playsound <context.location> sound:block_wood_break volume:2
 
             #Spawn 10 special entities with a delay of 0.5 seconds
@@ -44,25 +36,6 @@ dusty_waste_events:
                 - spawn dusty_waste_skeleton <context.location.center> target:<context.location.find_players_within[50].get[1].if_null[]>
                 - playsound <context.location> sound:entity_skeleton_ambient pitch:2 volume:2
                 - wait 0.5s
-        #Stop the trap from burning
-        on block burns location_flagged:dusty_waste:
-            - determine cancelled
-        #Redundant event, keep for now
-        on block ignites location_flagged:dusty_waste:
-            - determine cancelled
-        #Stop the trap from being pushed or pulled by pistons
-        on piston extends:
-            - foreach <context.blocks>:
-                - if <[value].has_flag[dusty_waste]>:
-                    - determine cancelled
-        on piston retracts:
-            - foreach <context.blocks>:
-                - if <[value].has_flag[dusty_waste]>:
-                    - determine cancelled
-        #Destroy the trap properly when it is blown up
-        on block destroyed by explosion location_flagged:dusty_waste:
-            - flag <context.location> dusty_waste:!
-            - flag <context.location> trap:!
         #Stop the special skeleton entities from burning
         on dusty_waste_skeleton combusts:
             - determine cancelled
