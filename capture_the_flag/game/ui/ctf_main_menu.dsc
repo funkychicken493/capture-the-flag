@@ -6,9 +6,9 @@ ctf_command:
     aliases:
         - capture
     script:
-        - inventory open d:ctf_main_menu
+        - inventory open d:ctfmm
 
-ctf_main_menu:
+ctfmm:
     type: inventory
     inventory: chest
     gui: true
@@ -18,29 +18,29 @@ ctf_main_menu:
         - determine <item[glass_pane].repeat_as_list[27]>
     slots:
     - [] [] [] [] [] [] [] [] []
-    - [] [] [ctf_main_menu_create_game] [] [] [] [ctf_main_menu_games] [] []
+    - [] [] [ctfmm_create_game] [] [] [] [ctfmm_games] [] []
     - [] [] [] [] [] [] [] [] []
 
-ctf_main_menu_events:
+ctfmm_events:
     type: world
     debug: true
     events:
-        after player clicks ctf_main_menu_create_game in ctf_main_menu:
-            - inventory open d:ctf_main_menu_create_game_submenu
+        after player clicks ctfmm_create_game in ctfmm:
+            - inventory open d:ctfmm_create_game_menu
             - flag <player> current_game_private:true
-        after player clicks ctf_main_menu_games in ctf_main_menu:
-            - inventory open d:ctf_main_menu_games_submenu
-        after player clicks ctf_main_menu_create_game_submenu_privacy_true in ctf_main_menu_create_game_submenu:
+        after player clicks ctfmm_games in ctfmm:
+            - inventory open d:ctfmm_games_submenu
+        after player clicks ctfmm_create_game_privacy_true in ctfmm_create_game_menu:
             - flag <player> current_game_private:false
-            - inventory o:ctf_main_menu_create_game_submenu_privacy_false set slot:<context.slot> destination:<context.inventory>
-        after player clicks ctf_main_menu_create_game_submenu_privacy_false in ctf_main_menu_create_game_submenu:
+            - inventory o:ctfmm_create_game_privacy_false set slot:<context.slot> destination:<context.inventory>
+        after player clicks ctfmm_create_game_privacy_false in ctfmm_create_game_menu:
             - flag <player> current_game_private:true
-            - inventory o:ctf_main_menu_create_game_submenu_privacy_true set slot:<context.slot> destination:<context.inventory>
-        after player clicks ctf_main_menu_create_game_submenu_host in ctf_main_menu_create_game_submenu:
+            - inventory o:ctfmm_create_game_privacy_true set slot:<context.slot> destination:<context.inventory>
+        after player clicks ctfmm_create_game_host in ctfmm_create_game_menu:
             - run game_creation_handler def.player:<player> def.privacy:<player.flag[current_game_private].if_null[false]>
-        after player clicks ctf_main_menu_return in inventory:
-            - inventory open d:ctf_main_menu
-        after player opens ctf_main_menu_games_submenu:
+        after player clicks ctfmm_return in inventory:
+            - inventory open d:ctfmm
+        after player opens ctfmm_games_submenu:
             - define valid_worlds <list[]>
             - foreach <server.flag[active_games].if_null[<list[]>]>:
                 - if <[value].flag[private].if_null[true]> && <player> in <[value].flag[invited_players].if_null[<list[]>]> || <[value].flag[private].if_null[true].not>:
@@ -62,7 +62,7 @@ ctf_main_menu_events:
                 - inventory set o:<[value]> slot:<[slot]> d:<context.inventory>
                 - define slot <[slot].add[1]>
 
-ctf_main_menu_games:
+ctfmm_games:
     type: item
     material: paper
     display name: <green>View Current Games
@@ -71,7 +71,7 @@ ctf_main_menu_games:
     enchantments:
         - unbreaking:1
 
-ctf_main_menu_games_submenu:
+ctfmm_games_submenu:
     type: inventory
     inventory: chest
     gui: true
@@ -83,9 +83,9 @@ ctf_main_menu_games_submenu:
     - [] [] [] [] [] [] [] [] []
     - [] [] [] [] [] [] [] [] []
     - [] [] [] [] [] [] [] [] []
-    - [ctf_main_menu_return] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>]
+    - [ctfmm_return] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>] [<item[gray_stained_glass_pane]>]
 
-ctf_main_menu_return:
+ctfmm_return:
     type: item
     material: barrier
     display name: <red>Return
@@ -94,7 +94,7 @@ ctf_main_menu_return:
     enchantments:
         - unbreaking:1
 
-ctf_main_menu_create_game_submenu_host:
+ctfmm_create_game_host:
     type: item
     material: target
     display name: <green>Host Game!
@@ -103,7 +103,7 @@ ctf_main_menu_create_game_submenu_host:
     enchantments:
         - unbreaking:1
 
-ctf_main_menu_create_game:
+ctfmm_create_game:
     type: item
     material: beacon
     mechanisms:
@@ -112,7 +112,7 @@ ctf_main_menu_create_game:
     enchantments:
         - unbreaking:1
 
-ctf_main_menu_create_game_submenu:
+ctfmm_create_game_menu:
     type: inventory
     inventory: chest
     gui: true
@@ -122,10 +122,10 @@ ctf_main_menu_create_game_submenu:
         - determine <item[glass_pane].repeat_as_list[27]>
     slots:
     - [] [] [] [] [] [] [] [] []
-    - [] [] [ctf_main_menu_create_game_submenu_host] [] [] [] [ctf_main_menu_create_game_submenu_privacy_false] [] []
-    - [ctf_main_menu_return] [] [] [] [] [] [] [] []
+    - [] [] [ctfmm_create_game_host] [] [] [] [ctfmm_create_game_privacy_false] [] []
+    - [ctfmm_return] [] [] [] [] [] [] [] []
 
-ctf_main_menu_create_game_submenu_privacy_true:
+ctfmm_create_game_privacy_true:
     type: item
     material: redstone_block
     mechanisms:
@@ -134,7 +134,7 @@ ctf_main_menu_create_game_submenu_privacy_true:
     enchantments:
         - unbreaking:1
 
-ctf_main_menu_create_game_submenu_privacy_false:
+ctfmm_create_game_privacy_false:
     type: item
     material: emerald_block
     mechanisms:
