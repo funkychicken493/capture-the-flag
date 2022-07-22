@@ -25,7 +25,6 @@ flagpost_placement_handler:
             - modifyblock <[location]> note_block
             - flag <[location].world> flags.<[player].item_in_hand.flag[flag_color]>.location:<[location]>
             - flag <[location]> flagpost_<[player].item_in_hand.flag[flag_color]>
-            
             - stop
         - else:
             - determine passively cancelled

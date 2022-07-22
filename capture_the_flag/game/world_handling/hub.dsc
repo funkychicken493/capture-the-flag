@@ -28,8 +28,9 @@ hub_events:
         on player right clicks block:
             - if <player.location.world> == <world[hub]>:
                 - determine cancelled
-        #on player walks in:out_of_bounds_hub:
-           # - teleport <player> hub_spawn if:<player.gamemode.equals[creative].not>
+        #The below event is commented out because it refuses to function on any server without the area "out_of_bounds_hub"
+            #on player walks in:out_of_bounds_hub:
+               # - teleport <player> hub_spawn if:<player.gamemode.equals[creative].not>
         on player dies:
             - if <player.location.world> == <world[hub]>:
                 - determine passively cancelled

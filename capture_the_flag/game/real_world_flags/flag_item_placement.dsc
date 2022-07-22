@@ -20,7 +20,7 @@ flagpost_placement:
             - define player <player>
             - define location <context.location>
             - inject flagpost_placement_handler
-            
+
         on player places block location_flagged:flag_zone:
             - narrate "You can't build this close to flags!"
             - determine cancelled

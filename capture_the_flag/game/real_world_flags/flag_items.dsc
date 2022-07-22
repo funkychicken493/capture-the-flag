@@ -5,7 +5,7 @@ flag_red:
         custom_model_data: 1
     display name: <dark_red><bold>Red Flag
     lore:
-        - "flaggy flaggy heeeeeheee"
+        - flaggy flaggy heeeeeheee
     flags:
         flag_item: true
         flag_color: red
@@ -18,7 +18,7 @@ flagpost_red:
         custom_model_data: 1
     display name: <dark_red><bold>Red Flag Post
     lore:
-        - "not the real flag idiot"
+        - not the real flag idiot
     flags:
         flagpost_item: true
         flag_color: red
@@ -31,7 +31,7 @@ flag_blue:
         custom_model_data: 2
     display name: <blue><bold>Blue Flag
     lore:
-        - "flaggy flaggy heeeeeheee"
+        - flaggy flaggy heeeeeheee
     flags:
         flag_item: true
         flag_color: blue
@@ -44,7 +44,7 @@ flagpost_blue:
         custom_model_data: 2
     display name: <blue><bold>Blue Flag Post
     lore:
-        - "not the real flag idiot"
+        - not the real flag idiot
     flags:
         flagpost_item: true
         flag_color: blue

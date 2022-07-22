@@ -33,14 +33,14 @@ flagpost_get_flag:
                 - narrate "we do a little trolling (blue sus)"
                 - determine passively NOTHING
                 - give flag_blue
-                - flag player flag_held
+                - flag <player> flag_held
             - else if <context.location.has_flag[flagpost_red]>:
                 - narrate "we do a little trolling (red sus)"
                 - determine passively NOTHING
                 - give flag_red
-                - flag player flag_held
+                - flag <player> flag_held
             - else:
-                - narrate "Error"
+                - narrate Error
 flag_player_prevent:
     type: world
     debug: true
