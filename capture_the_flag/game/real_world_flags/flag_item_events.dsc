@@ -46,7 +46,10 @@ flag_player_prevent:
         on player opens inventory:
         - if <player.has_flag[flag_held]>:
             - determine cancelled
-        
-        on player clicks item in inventory:
+        on player left_click clicks item in inventory:
         - if <player.has_flag[flag_held]>:
             - determine cancelled
+        on delta time secondly:
+        - foreach <server.online_players> as:__player:
+            - if    <player.inventory.contains_item[flag_*].not>
+            - flag <player> flag_held:!
