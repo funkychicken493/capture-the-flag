@@ -82,7 +82,7 @@ default_shotgun:
             #Bullet damage
             damage: 15
             #Bullet spread
-            spread: 0.7
+            spread: 1.13
             #Bullet range
             range: 20
             #Bullet count
@@ -127,7 +127,7 @@ gun_events:
 
             #Tell the player to reload if they have no bullets left
             - if <[bullets_left]> == 0:
-                - title title:<red>RELOAD 1s targets:<player> fade_in:1t
+                - title title:<red>RELOAD targets:<player> fade_in:1t fade_out:1t stay:1s
                 - actionbar "<red><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
                 - playsound <player> sound:entity_villager_no pitch:<element[1.5].mul[<util.random.int[0.5].to[1.5]>]>
                 - stop
@@ -185,13 +185,13 @@ gun_events:
             - if <[bullets_left]> == <[clip_size]>:
                 - stop
 
-            - title title:<yellow>RELOADING... 1s targets:<player> fade_in:1t
+            - title title:<yellow>RELOADING... targets:<player> fade_in:1t fade_out:1t stay:1s
             - inject gun_sounds path:<[reload_sound_path]>
             - itemcooldown <[item].material> duration:<[reload_time]>s
             - inventory flag slot:hand gun_data.bullets_left:<[clip_size]>
             - actionbar "<green><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
             - wait <[reload_time]>s
-            - title title:<green>RELOADED 1s targets:<player> fade_in:1t
+            - title title:<green>RELOADED targets:<player> fade_in:1t fade_out:1t stay:1s
             - inject gun_sounds path:<[reload_end_sound_path]>
 
 gun_bullet_counter:
