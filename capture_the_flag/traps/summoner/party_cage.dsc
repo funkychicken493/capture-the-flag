@@ -41,6 +41,6 @@ party_cage_events:
             - define hostile <list[]>
             - foreach <server.entity_types>:
                 #Ensure that the mob is hostile and not a boss or a removed mob.
-                - if <entity[<[value]>].is_monster> && <entity[<[value]>].entity_type> not in wither|ender_dragon|giant|elder_guardian|illusioner:
+                - if <entity[<[value]>].is_monster> && <entity[<[value]>].entity_type> not in wither|ender_dragon|giant|elder_guardian|illusioner|vex|evoker:
                     - define hostile <[hostile].include[<entity[<[value]>].with[health_data=1/1].with[flag_map=<map[party_cage_mob=true]>]>]>
             - flag server party_cage_hostile:<[hostile]>
