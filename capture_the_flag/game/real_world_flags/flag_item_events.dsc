@@ -39,8 +39,6 @@ flagpost_get_flag:
                 - determine passively NOTHING
                 - give flag_red
                 - flag <player> flag_held
-            - else:
-                - narrate Error
 flag_player_prevent:
     type: world
     debug: true
