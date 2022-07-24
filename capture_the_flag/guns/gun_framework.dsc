@@ -128,17 +128,12 @@ gun_events:
             #Tell the player to reload if they have no bullets left
             - if <[bullets_left]> == 0:
                 - title title:<red>RELOAD targets:<player> fade_in:1t fade_out:1t stay:1s
-                - actionbar "<red><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
                 - playsound <player> sound:entity_villager_no pitch:<element[1.5].mul[<util.random.int[0.5].to[1.5]>]>
                 - stop
 
             #Use archaic item cooldowns to prevent players from spamming the gun
             - itemcooldown <context.item.material> duration:<[firerate]>s
             - inventory flag slot:hand gun_data.bullets_left:<[bullets_left].sub[1]>
-            - if <[bullets_left]> != 0:
-                - actionbar "<green><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
-            - else:
-                - actionbar "<red><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
 
             #Play the fire sound
             - inject gun_sounds path:<[fire_sound_path]>
@@ -189,7 +184,6 @@ gun_events:
             - inject gun_sounds path:<[reload_sound_path]>
             - itemcooldown <[item].material> duration:<[reload_time]>s
             - inventory flag slot:hand gun_data.bullets_left:<[clip_size]>
-            - actionbar "<green><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
             - wait <[reload_time]>s
             - title title:<green>RELOADED targets:<player> fade_in:1t fade_out:1t stay:1s
             - inject gun_sounds path:<[reload_end_sound_path]>
@@ -198,22 +192,21 @@ gun_bullet_counter:
     type: world
     debug: false
     events:
-        after player holds item:
-            - define item <player.inventory.slot[<context.new_slot>]>
-            - if !<[item].has_flag[gun].if_null[false]>:
-                - actionbar <empty>
-                - stop
-            - define gun_data <[item].flag[gun_data]>
-            - define gun <[item].flag[gun]>
-            - define clip_size <[gun].get[clip]>
-
-            - while <player.exists> && <player.inventory.slot[<player.held_item_slot>]> == <[item]>:
+        after tick every:5:
+            - foreach <server.online_players> as:__player:
+                - if <player.item_in_hand.has_flag[gun].not>:
+                    - actionbar <empty> targets:<player>
+                    - foreach next
+                - foreach next if:<player.item_in_hand.has_flag[gun].not>
+                - define gun <player.item_in_hand.flag[gun]>
+                - define clip_size <[gun].get[clip]>
+                - define gun_data <player.item_in_hand.flag[gun_data]>
                 - define bullets_left <[gun_data].get[bullets_left]>
-                - if <[bullets_left]> != 0:
+                - if <[bullets_left]> == <[clip_size]>:
                     - actionbar "<green><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
+                - else if <[bullets_left]> > 0:
+                    - actionbar "<yellow><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
                 - else:
                     - actionbar "<red><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
-                - wait 5t
-            - if <player.exists>:
-                - actionbar <empty>
+
 
