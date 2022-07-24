@@ -30,12 +30,12 @@ flagpost_get_flag:
     events:
         on player breaks block:
             - if <context.location.has_flag[flagpost_blue]>:
-                - narrate "we do a little trolling (blue sus)"
+                - narrate "blue flag has been given"
                 - determine passively NOTHING
                 - give flag_blue
                 - flag <player> flag_held
             - else if <context.location.has_flag[flagpost_red]>:
-                - narrate "we do a little trolling (red sus)"
+                - narrate "red flag has been given"
                 - determine passively NOTHING
                 - give flag_red
                 - flag <player> flag_held
@@ -44,5 +44,9 @@ flag_player_prevent:
     debug: true
     events:
         on player opens inventory:
+        - if <player.has_flag[flag_held]>:
+            - determine cancelled
+        
+        on player clicks item in inventory:
         - if <player.has_flag[flag_held]>:
             - determine cancelled
