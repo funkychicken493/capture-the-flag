@@ -27,12 +27,7 @@ party_cage_events:
 
             #This entire process should be removed and put in it's own event.
             #Initialize the list of the server's hostile mobs.
-            - define hostile <list[]>
-            #For each mob in the server, if it is hostile then add it to the hostile list.
-            - foreach <server.entity_types>:
-                #Ensure that the mob is hostile and not a boss or a removed mob.
-                - if <entity[<[value]>].is_monster> && <entity[<[value]>].entity_type> not in wither|ender_dragon|giant|elder_guardian|illusioner:
-                    - define hostile <[hostile].include[<entity[<[value]>].with[health_data=1/1].with[flag_map=<map[party_cage_mob=true]>]>]>
+            - define hostile <server.flag[party_cage_hostile]>
 
             #Spawn three of the randomly selected hostile mobs.
             - spawn <[hostile].random[1].get[1].repeat_as_list[3]> <context.location.center> target:<context.location.find_players_within[50].get[1].if_null[]>
@@ -41,3 +36,11 @@ party_cage_events:
         on entity dies:
             - if <context.entity.has_flag[party_cage_mob]>:
                 - determine NO_DROPS
+
+        after script reload:
+            - define hostile <list[]>
+            - foreach <server.entity_types>:
+                #Ensure that the mob is hostile and not a boss or a removed mob.
+                - if <entity[<[value]>].is_monster> && <entity[<[value]>].entity_type> not in wither|ender_dragon|giant|elder_guardian|illusioner:
+                    - define hostile <[hostile].include[<entity[<[value]>].with[health_data=1/1].with[flag_map=<map[party_cage_mob=true]>]>]>
+            - flag server party_cage_hostile:<[hostile]>
