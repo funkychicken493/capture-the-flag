@@ -18,9 +18,6 @@ dusty_waste_events:
     type: world
     debug: true
     events:
-        on player places dusty_waste:
-            #Identify the trap as a trap for use in other events
-            - flag <context.location> trap.dusty_waste
         #When the block is right clicked or pulsed, the trap is activated
         on noteblock plays note location_flagged:trap.dusty_waste:
             - determine passively cancelled

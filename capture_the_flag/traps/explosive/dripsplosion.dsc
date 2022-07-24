@@ -18,10 +18,6 @@ drip_bomb_events:
     type: world
     debug: true
     events:
-        on player places drip_bomb:
-            #Identify the location using flags
-            - flag <context.location> trap.drip_bomb
-
         #Activates when the player right clicks the note block or it is pulsed
         on noteblock plays note location_flagged:trap.drip_bomb:
             - determine passively cancelled

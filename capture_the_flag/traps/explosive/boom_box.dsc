@@ -20,10 +20,6 @@ boom_box_events:
     type: world
     debug: true
     events:
-        on player places boom_box:
-            #Flag the location with identification flags when placed
-            - flag <context.location> trap.boom_box
-
         #Event to trigger the trap and summon primed tnt entities
         on noteblock plays note location_flagged:trap.boom_box:
             - determine passively cancelled

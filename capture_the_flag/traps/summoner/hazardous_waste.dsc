@@ -18,9 +18,6 @@ hazardous_waste_events:
     type: world
     debug: true
     events:
-        on player places hazardous_waste:
-            #Identify the location as a trap on placement
-            - flag <context.location> trap.hazardous_waste
         on noteblock plays note location_flagged:trap.hazardous_waste:
             - determine passively cancelled
 

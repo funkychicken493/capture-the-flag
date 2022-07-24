@@ -18,9 +18,6 @@ party_cage_events:
     type: world
     debug: false
     events:
-        on player places party_cage:
-            #Identify the location as a party cage trap
-            - flag <context.location> trap.party_cage
         on noteblock plays note location_flagged:trap.party_cage:
             - determine passively cancelled
 
