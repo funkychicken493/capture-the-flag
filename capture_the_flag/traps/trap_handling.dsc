@@ -12,6 +12,20 @@ trap_handling:
 
         on player places item_flagged:trap:
             - flag <context.location> trap.<context.item_in_hand.flag[trap]>
+        on noteblock plays note location_flagged:trap:
+            - determine passively cancelled
+
+            - foreach <context.location.flag[trap].keys>:
+                - definemap context:
+                    location: <context.location>
+                    trap_map: <context.location.flag[trap].if_null[null]>
+                - customevent id:ta_<[value]> context:<[context]> save:<[value]>
+                - if <entry[<[value]>].any_ran>:
+                    - stop if:<entry[<[value]>].was_cancelled>
+
+            - flag <context.location> trap:!
+            - modifyblock <context.location> air
+            - playsound <context.location> sound:block_wood_break volume:2
 
         on piston extends:
             - foreach <context.blocks>:
