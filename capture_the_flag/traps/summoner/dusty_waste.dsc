@@ -11,7 +11,8 @@ dusty_waste:
     enchantments:
         - unbreaking:1
     flags:
-        trap: dusty_waste
+        trap:
+            dusty_waste: true
 
 #Events for the dusty waste trap
 dusty_waste_events:

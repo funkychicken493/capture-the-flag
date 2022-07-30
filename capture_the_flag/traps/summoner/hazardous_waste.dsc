@@ -11,7 +11,8 @@ hazardous_waste:
     enchantments:
         - unbreaking:1
     flags:
-        trap: hazardous_waste
+        trap:
+            hazardous_waste: true
 
 #Events for the hazardous waste trap.
 hazardous_waste_events:

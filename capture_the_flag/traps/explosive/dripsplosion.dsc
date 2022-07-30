@@ -11,7 +11,8 @@ drip_bomb:
     enchantments:
         - unbreaking:1
     flags:
-        trap: drip_bomb
+        trap:
+            drip_bomb: true
 
 #Events for the drip_bomb item's mechanics
 drip_bomb_events:

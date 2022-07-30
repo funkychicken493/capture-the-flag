@@ -13,7 +13,8 @@ boom_box:
     enchantments:
         - unbreaking:1
     flags:
-        trap: boom_box
+        trap:
+            boom_box: true
 
 #This is the code that will be executed when the trap is activated
 boom_box_events:

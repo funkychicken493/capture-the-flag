@@ -11,7 +11,8 @@ party_cage:
     enchantments:
         - unbreaking:1
     flags:
-        trap: party_cage
+        trap:
+            party_cage: true
 
 #Events for the party cage trap to summon mobs.
 party_cage_events:
