@@ -20,12 +20,12 @@ trap_handling:
             #- playsound <context.location> sound:block_wood_break volume:2
 
         on piston extends:
-            - foreach <context.blocks>:
-                - if <[value].has_flag[trap]>:
+            - foreach <context.blocks> as:block:
+                - if <[block].has_flag[trap]>:
                     - determine cancelled
         on piston retracts:
-            - foreach <context.blocks>:
-                - if <[value].has_flag[trap]>:
+            - foreach <context.blocks> as:block:
+                - if <[block].has_flag[trap]>:
                     - determine cancelled
         on block ignites location_flagged:trap:
             - determine cancelled
