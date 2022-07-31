@@ -23,12 +23,6 @@ boom_box_events:
     events:
         #Event to trigger the trap and summon primed tnt entities
         on noteblock plays note location_flagged:trap.boom_box:
-            - determine passively cancelled
-
-            - flag <context.location> trap:!
-            - modifyblock <context.location> air
-            - playsound <context.location> sound:block_wood_break volume:2
-
             #Start the timer for the spawning of the primed tnt entities
             - repeat 10:
                 - spawn boom_box_tnt <context.location.center>

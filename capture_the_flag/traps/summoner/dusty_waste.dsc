@@ -21,12 +21,6 @@ dusty_waste_events:
     events:
         #When the block is right clicked or pulsed, the trap is activated
         on noteblock plays note location_flagged:trap.dusty_waste:
-            - determine passively cancelled
-
-            - flag <context.location> trap:!
-            - modifyblock <context.location> air
-            - playsound <context.location> sound:block_wood_break volume:2
-
             #Spawn 10 special entities with a delay of 0.5 seconds
             #Plays skeleton ambient sound, need to make this more unique and complex
             - repeat 10:

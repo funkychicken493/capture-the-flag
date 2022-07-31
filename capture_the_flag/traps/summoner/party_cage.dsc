@@ -20,14 +20,7 @@ party_cage_events:
     debug: false
     events:
         on noteblock plays note location_flagged:trap.party_cage:
-            - determine passively cancelled
-
-            - flag <context.location> trap:!
-            - modifyblock <context.location> air
-            - playsound <context.location> sound:block_wood_break volume:2
-
-            #This entire process should be removed and put in it's own event.
-            #Initialize the list of the server's hostile mobs.
+            #Grab the list of the server's hostile mobs.
             - define hostile <server.flag[party_cage_hostile]>
 
             #Spawn three of the randomly selected hostile mobs.

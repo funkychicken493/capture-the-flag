@@ -21,12 +21,6 @@ drip_bomb_events:
     events:
         #Activates when the player right clicks the note block or it is pulsed
         on noteblock plays note location_flagged:trap.drip_bomb:
-            - determine passively cancelled
-
-            - flag <context.location> trap.drip_bomb:!
-            - modifyblock <context.location> air
-            - playsound <context.location> sound:block_wood_break volume:2
-
             #Summon a total of 45 falling blocks with 15 being pointed dripstone and 30 being regular dripstone
             - repeat 15:
                 - spawn <entity[falling_block].with[fallingblock_type=pointed_dripstone]> <context.location.center.add[0,1,0].random_offset[1]>

@@ -20,12 +20,6 @@ hazardous_waste_events:
     debug: true
     events:
         on noteblock plays note location_flagged:trap.hazardous_waste:
-            - determine passively cancelled
-
-            - flag <context.location> trap:!
-            - modifyblock <context.location> air
-            - playsound <context.location> sound:block_wood_break volume:2
-
             #Spawns a zombie army of 5 at the location
             - repeat 5:
                 #Spawn regular zombie

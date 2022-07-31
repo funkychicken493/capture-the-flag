@@ -26,7 +26,7 @@ trap_handling:
 
             - flag <context.location> trap:!
             - modifyblock <context.location> air
-            #- playsound <context.location> sound:block_wood_break volume:2
+            - playsound <context.location> sound:block_wood_break volume:2
 
         on piston extends:
             - foreach <context.blocks> as:block:
