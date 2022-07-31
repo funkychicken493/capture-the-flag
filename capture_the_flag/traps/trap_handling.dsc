@@ -11,7 +11,16 @@ trap_handling:
                 - adjustblock <context.location> note:<context.location.material.note.sub[1].min[24].max[0]>
 
         on player places item_flagged:trap:
-            - flag <context.location> trap.<context.item_in_hand.flag[trap]>
+            - define trap_flag <context.item_in_hand.flag[trap]>
+            - choose <[trap_flag].object_type>:
+                - default:
+                    - flag <context.location> trap.<[trap_flag]>
+                - case List:
+                    - foreach <[trap_flag]> as:trap:
+                        - flag <context.location> trap.<[trap]>
+                - case Map:
+                    - foreach <[trap_flag].keys> as:trap:
+                        - flag <context.location> trap.<[trap]>
         on noteblock plays note location_flagged:trap:
             - determine passively cancelled
 
