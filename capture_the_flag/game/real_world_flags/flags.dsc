@@ -1,3 +1,29 @@
+flag_red:
+    type: item
+    material: dirt
+    mechanisms:
+        custom_model_data: 1
+    display name: <dark_red><bold>Red Flag
+    lore:
+        - flaggy flaggy heeeeeheee
+    flags:
+        flag_item: true
+        flag_color: red
+        uniquefier: <util.random_uuid>
+
+flag_blue:
+    type: item
+    material: dirt
+    mechanisms:
+        custom_model_data: 2
+    display name: <blue><bold>Blue Flag
+    lore:
+        - flaggy flaggy heeeeeheee
+    flags:
+        flag_item: true
+        flag_color: blue
+        uniquefier: <util.random_uuid>
+
 flag_item_events:
     type: world
     debug: true
