@@ -1,101 +1,3 @@
-default_revolver:
-    type: item
-    material: wooden_hoe
-    mechanisms:
-        unbreakable: false
-        hides: enchants|attributes|unbreakable
-    display name: <gold>Default Revolver
-    enchantments:
-        - unbreaking:1
-    flags:
-        gun_data:
-            bullets_left: 0
-        gun:
-            type: revolver
-            fire_sound_path: generic_revolver
-            #Time between shots in seconds
-            firerate: 0.5
-            #Bullet damage
-            damage: 10
-            #Bullet spread
-            spread: 0.01
-            #Bullet range
-            range: 100
-            #Bullet count
-            count: 1
-            #Shots per clip
-            clip: 6
-            #Reload time in seconds
-            reload: 2.0
-            #Reload sound path
-            reload_sound_path: generic_revolver
-
-default_smg:
-    type: item
-    material: wooden_hoe
-    mechanisms:
-        unbreakable: false
-        hides: enchants|attributes|unbreakable
-    display name: <gold>Default SMG
-    enchantments:
-        - unbreaking:1
-    flags:
-        gun_data:
-            bullets_left: 0
-        gun:
-            type: smg
-            fire_sound_path: generic_smg
-            #Time between shots in seconds
-            firerate: 0.05
-            #Bullet damage
-            damage: 10
-            #Bullet spread
-            spread: 1.0
-            #Bullet range
-            range: 75
-            #Bullet count
-            count: 1
-            #Shots per clip
-            clip: 30
-            #Reload time in seconds
-            reload: 2.0
-            #Reload sound path
-            reload_sound_path: generic_smg
-
-default_shotgun:
-    type: item
-    material: wooden_hoe
-    mechanisms:
-        unbreakable: false
-        hides: enchants|attributes|unbreakable
-    display name: <gold>Default Shotgun
-    enchantments:
-        - unbreaking:1
-    flags:
-        gun_data:
-            bullets_left: 0
-        gun:
-            type: shotgun
-            fire_sound_path: generic_shotgun
-            #Time between shots in seconds
-            firerate: 0.5
-            #Bullet damage
-            damage: 15
-            #Bullet spread
-            spread: 1.13
-            #Bullet range
-            range: 20
-            #Bullet count
-            count: 7
-            #Shots per clip
-            clip: 6
-            #Reload time in seconds
-            reload: 2.0
-            #Reload sound path
-            reload_start_sound_path: generic_shotgun
-            #Reload complete sound path
-            reload_end_sound_path: generic_shotgun
-
 gun_events:
     type: world
     debug: true
@@ -209,4 +111,101 @@ gun_bullet_counter:
                 - else:
                     - actionbar "<red><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
 
+default_revolver:
+    type: item
+    material: wooden_hoe
+    mechanisms:
+        unbreakable: false
+        hides: enchants|attributes|unbreakable
+    display name: <gold>Default Revolver
+    enchantments:
+        - unbreaking:1
+    flags:
+        gun_data:
+            bullets_left: 0
+        gun:
+            type: revolver
+            fire_sound_path: generic_revolver
+            #Time between shots in seconds
+            firerate: 0.5
+            #Bullet damage
+            damage: 10
+            #Bullet spread
+            spread: 0.01
+            #Bullet range
+            range: 100
+            #Bullet count
+            count: 1
+            #Shots per clip
+            clip: 6
+            #Reload time in seconds
+            reload: 2.0
+            #Reload sound path
+            reload_sound_path: generic_revolver
+
+default_smg:
+    type: item
+    material: wooden_hoe
+    mechanisms:
+        unbreakable: false
+        hides: enchants|attributes|unbreakable
+    display name: <gold>Default SMG
+    enchantments:
+        - unbreaking:1
+    flags:
+        gun_data:
+            bullets_left: 0
+        gun:
+            type: smg
+            fire_sound_path: generic_smg
+            #Time between shots in seconds
+            firerate: 0.05
+            #Bullet damage
+            damage: 10
+            #Bullet spread
+            spread: 1.0
+            #Bullet range
+            range: 75
+            #Bullet count
+            count: 1
+            #Shots per clip
+            clip: 30
+            #Reload time in seconds
+            reload: 2.0
+            #Reload sound path
+            reload_sound_path: generic_smg
+
+default_shotgun:
+    type: item
+    material: wooden_hoe
+    mechanisms:
+        unbreakable: false
+        hides: enchants|attributes|unbreakable
+    display name: <gold>Default Shotgun
+    enchantments:
+        - unbreaking:1
+    flags:
+        gun_data:
+            bullets_left: 0
+        gun:
+            type: shotgun
+            fire_sound_path: generic_shotgun
+            #Time between shots in seconds
+            firerate: 0.5
+            #Bullet damage
+            damage: 15
+            #Bullet spread
+            spread: 1.13
+            #Bullet range
+            range: 20
+            #Bullet count
+            count: 7
+            #Shots per clip
+            clip: 6
+            #Reload time in seconds
+            reload: 2.0
+            #Reload sound path
+            reload_start_sound_path: generic_shotgun
+            #Reload complete sound path
+            reload_end_sound_path: generic_shotgun
 
