@@ -5,6 +5,11 @@ reload_on_server_start:
         after server start:
             - wait 5s
             - reload
+
+better_reload:
+    type: world
+    debug: false
+    events:
         on reload|rl command:
             - narrate Reloading...
             - reload
