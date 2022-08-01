@@ -8,8 +8,7 @@ sound_command:
         - testsound
         - soundtest
         - ts
-    #This permission is wack, but it's a test command.
-    permission: denizen.funky.sound
+    permission: ctf.command.sound
     tab completions:
         1: <server.sound_types>
         2: 0.5|1.0|2.0
