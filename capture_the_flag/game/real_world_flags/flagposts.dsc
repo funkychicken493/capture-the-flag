@@ -45,6 +45,29 @@ flag_place_check:
         - else:
             - determine success
 
+flagpost_events:
+    type: world
+    debug: true
+    events:
+        on player drops flagpost_*:
+            - narrate "cope "
+
+flagpost_get_flag:
+    type: world
+    debug: false
+    events:
+        on player breaks block:
+            - if <context.location.has_flag[flagpost_blue]>:
+                - narrate "blue flag has been given"
+                - determine passively NOTHING
+                - give flag_blue
+                - flag <player> flag_held
+            - else if <context.location.has_flag[flagpost_red]>:
+                - narrate "red flag has been given"
+                - determine passively NOTHING
+                - give flag_red
+                - flag <player> flag_held
+
 flagpost_placement:
     type: world
     debug: true
