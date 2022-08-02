@@ -111,15 +111,19 @@ gun_bullet_counter:
                 - else:
                     - actionbar "<red><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
 
-default_revolver:
+base_gun:
     type: item
     material: wooden_hoe
     mechanisms:
         unbreakable: false
         hides: enchants|attributes|unbreakable
-    display name: <gold>Default Revolver
     enchantments:
         - unbreaking:1
+
+default_revolver:
+    type: item
+    material: base_gun
+    display name: <gold>Default Revolver
     flags:
         gun_data:
             bullets_left: 0
@@ -145,13 +149,8 @@ default_revolver:
 
 default_smg:
     type: item
-    material: wooden_hoe
-    mechanisms:
-        unbreakable: false
-        hides: enchants|attributes|unbreakable
+    material: base_gun
     display name: <gold>Default SMG
-    enchantments:
-        - unbreaking:1
     flags:
         gun_data:
             bullets_left: 0
@@ -177,13 +176,8 @@ default_smg:
 
 default_shotgun:
     type: item
-    material: wooden_hoe
-    mechanisms:
-        unbreakable: false
-        hides: enchants|attributes|unbreakable
+    material: base_gun
     display name: <gold>Default Shotgun
-    enchantments:
-        - unbreaking:1
     flags:
         gun_data:
             bullets_left: 0
