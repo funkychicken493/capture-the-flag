@@ -2,10 +2,7 @@ gun_events:
     type: world
     debug: true
     events:
-        on player right clicks block:
-            - if !<context.item.has_flag[gun]>:
-                - stop
-
+        on player right clicks block with:item_flagged:gun:
             #Check that the player does not currently have a gun on cooldown
             - if <player.item_cooldown[<context.item.material>].in_ticks> > 0:
                 - stop
@@ -92,11 +89,9 @@ gun_events:
                     - if <[entity].is_living>:
                         - hurt <[damage]> <[entity]> source:<player>
 
-        on player left clicks block:
+        on player left clicks block with:item_flagged:gun:
             #Get the item in the player's hand
             - define item <context.item.if_null[<player.item_in_hand>]>
-            - if !<[item].has_flag[gun]>:
-                - stop
 
             - determine passively cancelled
 
