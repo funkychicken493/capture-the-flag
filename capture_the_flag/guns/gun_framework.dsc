@@ -55,34 +55,36 @@ gun_events:
 
                 - playeffect effect:<[particle]> offset:<[particle_offset]> at:<player.eye_location.points_between[<[impact].forward[<[particle_distance].mul[1.5]>]>].distance[<[particle_distance]>]> special_data:<[particle_special_data]>
 
-                - if <[props].keys.contains[explosion]>:
-                        - define fire <[props].deep_get[explosion.fire]||false>
-                        - define block_damage <[props].deep_get[explosion.block_damage]||false>
-                        - define power <[props].deep_get[explosion.power]||1>
-                        - if <[fire]> && <[block_damage]>:
-                            - explode <[impact]> power:<[power]> breakblocks fire
-                        - else if <[fire]>:
-                            - explode <[impact]> power:<[power]> fire
-                        - else if <[block_damage]>:
-                            - explode <[impact]> power:<[power]> breakblocks
-                        - else:
-                            - explode <[impact]> power:<[power]>
+                #This repeat is here to allow for the collapsing of the properties section, for organization
+                - repeat 1:
+                    - if <[props].keys.contains[explosion]>:
+                            - define fire <[props].deep_get[explosion.fire]||false>
+                            - define block_damage <[props].deep_get[explosion.block_damage]||false>
+                            - define power <[props].deep_get[explosion.power]||1>
+                            - if <[fire]> && <[block_damage]>:
+                                - explode <[impact]> power:<[power]> breakblocks fire
+                            - else if <[fire]>:
+                                - explode <[impact]> power:<[power]> fire
+                            - else if <[block_damage]>:
+                                - explode <[impact]> power:<[power]> breakblocks
+                            - else:
+                                - explode <[impact]> power:<[power]>
 
-                - if <[props].keys.contains[flash]>:
-                    - define flash_radius <[props].deep_get[flash.radius]||5>
-                    - define slow <[props].deep_get[flash.slow]||0>
-                    - define darkness <[props].deep_get[flash.darkness]||0>
-                    - define blind <[props].deep_get[flash.blind]||0>
-                    - cast darkness <[impact].find_entities[*].within[<[flash_radius]>]> amplifier:4 duration:<[darkness]>s
-                    - cast blindness <[impact].find_entities[*].within[<[flash_radius]>]> amplifier:4 duration:<[blind]>s
-                    - cast slow <[impact].find_entities[*].within[<[flash_radius]>]> duration:<[slow]>s
-                    - playeffect effect:flash at:<[impact].above[3.5]> quantity:35 offset:0.5,0.5,0.5
-                    - playeffect effect:redstone at:<[impact].above[3.5].to_ellipsoid[<[flash_radius]>,<[flash_radius]>,<[flash_radius]>].shell> quantity:1 special_data:1|red
+                    - if <[props].keys.contains[flash]>:
+                        - define flash_radius <[props].deep_get[flash.radius]||5>
+                        - define slow <[props].deep_get[flash.slow]||0>
+                        - define darkness <[props].deep_get[flash.darkness]||0>
+                        - define blind <[props].deep_get[flash.blind]||0>
+                        - cast darkness <[impact].find_entities[*].within[<[flash_radius]>]> amplifier:4 duration:<[darkness]>s
+                        - cast blindness <[impact].find_entities[*].within[<[flash_radius]>]> amplifier:4 duration:<[blind]>s
+                        - cast slow <[impact].find_entities[*].within[<[flash_radius]>]> duration:<[slow]>s
+                        - playeffect effect:flash at:<[impact].above[3.5]> quantity:35 offset:0.5,0.5,0.5
+                        - playeffect effect:redstone at:<[impact].above[3.5].to_ellipsoid[<[flash_radius]>,<[flash_radius]>,<[flash_radius]>].shell> quantity:1 special_data:1|red
 
-                - if <[props].keys.contains[ignite]>:
-                    - define ignite_targets <[impact].find_entities[*].within[<[props].deep_get[ignite.radius]||1>]>
-                    - define ignite_targets <[ignite_targets].exclude[<player>]> if:!<[props].deep_get[ignite.self]||true>
-                    - burn <[ignite_targets]> duration:<[props].deep_get[ignite.duration]||10>s
+                    - if <[props].keys.contains[ignite]>:
+                        - define ignite_targets <[impact].find_entities[*].within[<[props].deep_get[ignite.radius]||1>]>
+                        - define ignite_targets <[ignite_targets].exclude[<player>]> if:!<[props].deep_get[ignite.self]||true>
+                        - burn <[ignite_targets]> duration:<[props].deep_get[ignite.duration]||10>s
 
                 - foreach <[impact].find_entities[*].within[0.2].exclude[<player>]> as:entity:
                     #Check that the entity is living
