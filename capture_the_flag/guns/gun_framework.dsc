@@ -64,7 +64,7 @@ gun_events:
                         - else if <[fire]>:
                             - explode <[impact]> power:<[power]> fire
                         - else if <[block_damage]>:
-                            - explode <[impact]> power:<[power]> block_damage
+                            - explode <[impact]> power:<[power]> breakblocks
                         - else:
                             - explode <[impact]> power:<[power]>
 
