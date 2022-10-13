@@ -11,49 +11,49 @@ gun_events:
 
             #Grab the map containing all of the gun information
             - define gun <context.item.flag[gun]>
-            - define type <[gun].get[type]>
-            - define particle <[gun].deep_get[particle.type]||crit>
-            - define particle_distance <[gun].deep_get[particle.distance]||0.6>
-            - define particle_offset <[gun].deep_get[particle.offset]||0.0,0.0,0.0>
-            - define particle_special_data <[gun].deep_get[particle.special_data]||<empty>>
-            - define props <[gun].get[properties]||<map[]>>
-            - define firerate <[gun].get[firerate]>
-            - define damage <[gun].get[damage]>
-            - define bullet_spread <[gun].get[spread]>
-            - define bullet_range <[gun].get[range]>
-            - define bullets_per_shot <[gun].get[count]>
-            - define fire_sound_path <[gun].get[fire_sound_path]>
-            - define clip_size <[gun].get[clip]>
+            - define props <[gun.properties]||<map[]>>
+            #- define type <[gun].get[type]>
+            #- define particle <[gun].deep_get[particle.type]||crit>
+            #- define particle_distance <[gun].deep_get[particle.distance]||0.6>
+            #- define particle_offset <[gun].deep_get[particle.offset]||0.0,0.0,0.0>
+            #- define particle_special_data <[gun].deep_get[particle.special_data]||<empty>>
+            #- define firerate <[gun].get[firerate]>
+            #- define damage <[gun].get[damage]>
+            #- define bullet_spread <[gun].get[spread]>
+            #- define bullet_range <[gun].get[range]>
+            #- define bullets_per_shot <[gun].get[count]>
+            #- define fire_sound_path <[gun].get[fire_sound_path]>
+            #- define clip_size <[gun].get[clip]>
 
             #Grab the map containing the data that is SPECIFIC to the gun (e.g. ammo)
             - define gun_data <context.item.flag[gun_data]>
-            - define bullets_left <[gun_data].get[bullets_left]>
+            #- define bullets_left <[gun_data].get[bullets_left]>
 
             #Tell the player to reload if they have no bullets left
-            - if <[bullets_left]> == 0:
+            - if <[gun_data.bullets_left]> == 0:
                 - itemcooldown <context.item.material> duration:0.5s
                 - title subtitle:<red>RELOAD targets:<player> fade_in:1t fade_out:1t stay:1s
                 - inject gun_sounds_need_reload
                 - stop
 
             #Use archaic item cooldowns to prevent players from spamming the gun
-            - itemcooldown <context.item.material> duration:<[firerate]>s
-            - inventory flag slot:hand gun_data.bullets_left:<[bullets_left].sub[1]>
+            - itemcooldown <context.item.material> duration:<[gun.firerate]>s
+            - inventory flag slot:hand gun_data.bullets_left:<[gun_data.bullets_left].sub[1]>
 
             #Play the fire sound
-            - inject gun_sounds path:<[fire_sound_path]>
+            - inject gun_sounds path:<[gun.fire_sound_path]>
 
-            - repeat <[bullets_per_shot]>:
+            - repeat <[gun.bullets_per_shot]>:
                 #Raytrace to find the impact point
-                - define impact <player.eye_location.above[0.05].ray_trace[range=<[bullet_range]>;ignore=<player>;entities=*;fluids=false;nonsolids=false].if_null[null]>
+                - define impact <player.eye_location.above[0.05].ray_trace[range=<[gun.bullet_range]>;ignore=<player>;entities=*;fluids=false;nonsolids=false].if_null[null]>
                 #If the impact is absent, the bullet will travel straight to the end of the range
                 - if <[impact]> == null:
-                    - define impact <player.eye_location.forward[<[bullet_range]>]>
+                    - define impact <player.eye_location.forward[<[gun.bullet_range]>]>
                 #Apply bullet spread, just randomly offset the impact location
-                - if <[bullet_spread]> != 0:
-                    - define impact <[impact].random_offset[<[bullet_spread]>,<[bullet_spread].div[1.3]>,<[bullet_spread]>]>
+                - if <[gun.bullet_spread]> != 0:
+                    - define impact <[impact].random_offset[<[gun.bullet_spread]>,<[gun.bullet_spread].div[1.3]>,<[gun.bullet_spread]>]>
 
-                - playeffect effect:<[particle]> offset:<[particle_offset]> at:<player.eye_location.points_between[<[impact].forward[<[particle_distance].mul[1.5]>]>].distance[<[particle_distance]>]> special_data:<[particle_special_data]>
+                - playeffect effect:<[gun.particle.type]||crit> offset:<[gun.particle.offset]||0.0,0.0,0.0> at:<player.eye_location.points_between[<[impact].forward[<[gun.particle.distance].if_null[0.6].mul[1.5]>]>].distance[<[gun.particle.distance]>]> special_data:<[gun.particle.special_data]||<empty>>
 
                 #This repeat is here to allow for the collapsing of the properties section, for organization
                 - repeat 1:
