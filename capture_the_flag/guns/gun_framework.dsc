@@ -86,10 +86,11 @@ gun_events:
                         - define ignite_targets <[ignite_targets].exclude[<player>]> if:!<[props].deep_get[ignite.self]||true>
                         - burn <[ignite_targets]> duration:<[props].deep_get[ignite.duration]||10>s
 
-                - foreach <[impact].find_entities[*].within[0.2].exclude[<player>]> as:entity:
-                    #Check that the entity is living
-                    - if <[entity].is_living>:
-                        - hurt <[damage]> <[entity]> source:<player>
+                #splash damage to each living entity nearby
+                - foreach <[impact].find_entities[living].within[0.2].exclude[<player>]> as:entity:
+                    - hurt <[damage]> <[entity]> source:<player>
+                #SOON: make splash damage customizable
+                #SOON: make player exclusion customizable
 
         on player left clicks block with:item_flagged:gun:
             #Get the item in the player's hand
