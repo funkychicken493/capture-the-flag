@@ -89,8 +89,8 @@ gun_events:
                 #splash damage to each living entity nearby
                 - foreach <[impact].find_entities[living].within[0.2].exclude[<player>]> as:entity:
                     - hurt <[damage]> <[entity]> source:<player>
-                #SOON: make splash damage customizable
-                #SOON: make player exclusion customizable
+                #SOON: make splash damage radius customizable
+                #SOON: make player exclusion customizable (for example, a gun that if you shoot at the ground will hurt you too)
 
         on player left clicks block with:item_flagged:gun:
             #Get the item in the player's hand
