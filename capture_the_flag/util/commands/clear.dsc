@@ -9,4 +9,4 @@ clear_command:
     tab completions:
         1: <server.online_players.parse[name]>
     script:
-        - inventory clear d:<context.args.get[1].as_player.if_null[<player>].inventory>
+        - inventory clear d:<context.args.get[1].as[player].if_null[<player>].inventory>
