@@ -55,5 +55,5 @@ flag_player_prevent:
             - determine cancelled
         on delta time secondly:
         - foreach <server.online_players> as:__player:
-            - if    <player.inventory.contains_item[flag_*].not>
-            - flag <player> flag_held:!
+            - if <player.inventory.contains_item[flag_*].not>:
+                - flag <player> flag_held:!
