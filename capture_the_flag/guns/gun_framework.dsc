@@ -12,22 +12,9 @@ gun_events:
             #Grab the map containing all of the gun information
             - define gun <context.item.flag[gun]>
             - define props <[gun.properties]||<map[]>>
-            #- define type <[gun].get[type]>
-            #- define particle <[gun].deep_get[particle.type]||crit>
-            #- define particle_distance <[gun].deep_get[particle.distance]||0.6>
-            #- define particle_offset <[gun].deep_get[particle.offset]||0.0,0.0,0.0>
-            #- define particle_special_data <[gun].deep_get[particle.special_data]||<empty>>
-            #- define firerate <[gun].get[firerate]>
-            #- define damage <[gun].get[damage]>
-            #- define bullet_spread <[gun].get[spread]>
-            #- define bullet_range <[gun].get[range]>
-            #- define bullets_per_shot <[gun].get[count]>
-            #- define fire_sound_path <[gun].get[fire_sound_path]>
-            #- define clip_size <[gun].get[clip]>
 
             #Grab the map containing the data that is SPECIFIC to the gun (e.g. ammo)
             - define gun_data <context.item.flag[gun_data]>
-            #- define bullets_left <[gun_data].get[bullets_left]>
 
             #Tell the player to reload if they have no bullets left
             - if <[gun_data.bullets_left]> == 0:
@@ -88,7 +75,7 @@ gun_events:
 
                 #splash damage to each living entity nearby
                 - foreach <[impact].find_entities[living].within[0.2].exclude[<player>]> as:entity:
-                    - hurt <[damage]> <[entity]> source:<player>
+                    - hurt <[gun.damage]> <[entity]> source:<player>
                 #SOON: make splash damage radius customizable
                 #SOON: make player exclusion customizable (for example, a gun that if you shoot at the ground will hurt you too)
 
@@ -104,26 +91,21 @@ gun_events:
 
             #Grab gun information or whatever
             - define gun <[item].flag[gun]>
-            - define clip_size <[gun].get[clip]>
-            - define reload_time <[gun].get[reload]>
-            - define reload_sound_path <[gun].get[reload_start_sound_path]>
-            - define reload_end_sound_path <[gun].get[reload_end_sound_path]>
 
             #Grab the gun data
             - define gun_data <[item].flag[gun_data]>
-            - define bullets_left <[gun_data].get[bullets_left]>
 
             #If the player's magazine is full, no reloading required
-            - if <[bullets_left]> == <[clip_size]>:
+            - if <[gun_data.bullets_left]> == <[gun.clip]>:
                 - stop
 
             - title subtitle:<yellow>RELOADING... targets:<player> fade_in:1t fade_out:1t stay:1s
-            - inject gun_sounds path:<[reload_sound_path]>
-            - itemcooldown <[item].material> duration:<[reload_time]>s
-            - inventory flag slot:hand gun_data.bullets_left:<[clip_size]>
-            - wait <[reload_time]>s
+            - inject gun_sounds path:<[gun.reload_start_sound_path]>
+            - itemcooldown <[item].material> duration:<[gun.reload]>s
+            - inventory flag slot:hand gun_data.bullets_left:<[gun.clip]>
+            - wait <[gun.reload]>s
             - title subtitle:<green>RELOADED targets:<player> fade_in:1t fade_out:1t stay:1s
-            - inject gun_sounds path:<[reload_end_sound_path]>
+            - inject gun_sounds path:<[gun.reload_end_sound_path]>
 
 gun_bullet_counter:
     type: world
@@ -131,22 +113,22 @@ gun_bullet_counter:
     events:
         after tick every:5:
             - foreach <server.online_players> as:__player:
+
                 - if <player.item_in_hand.has_flag[gun].not>:
                     - actionbar <empty> targets:<player>
                     - foreach next
-                - foreach next if:<player.item_in_hand.has_flag[gun].not>
-                - define gun <player.item_in_hand.flag[gun]>
-                - define clip_size <[gun].get[clip]>
-                - define gun_data <player.item_in_hand.flag[gun_data]>
-                - define bullets_left <[gun_data].get[bullets_left]>
-                - if <[bullets_left]> == <[clip_size]>:
-                    - actionbar "<green><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
-                - else if <[bullets_left]> > 0:
-                    - actionbar "<yellow><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
-                - else:
-                    - actionbar "<red><bold><[bullets_left]> <gray>| <gold><bold><[clip_size]>"
 
-base_gun:
+                - define gun <player.item_in_hand.flag[gun]>
+                - define gun_data <player.item_in_hand.flag[gun_data]>
+
+                - if <[gun_data.bullets_left]> == <[gun.clip]>:
+                    - actionbar "<green><bold><[gun_data.bullets_left]> <gray>| <gold><bold><[gun.clip]>"
+                - else if <[gun_data.bullets_left]> > 0:
+                    - actionbar "<yellow><bold><[gun_data.bullets_left]> <gray>| <gold><bold><[gun.clip]>"
+                - else:
+                    - actionbar "<red><bold><[gun_data.bullets_left]> <gray>| <gold><bold><[gun.clip]>"
+
+testing_gun:
     type: item
     material: wooden_hoe
     mechanisms:
@@ -157,7 +139,7 @@ base_gun:
 
 default_revolver:
     type: item
-    material: base_gun
+    material: testing_gun
     display name: <gold>Default Revolver
     flags:
         gun_data:
@@ -191,7 +173,7 @@ default_revolver:
 
 flare_gun:
     type: item
-    material: base_gun
+    material: testing_gun
     display name: <red>Flare Gun
     flags:
         gun_data:
@@ -233,7 +215,7 @@ flare_gun:
 
 default_smg:
     type: item
-    material: base_gun
+    material: testing_gun
     display name: <gold>Default SMG
     flags:
         gun_data:
@@ -260,7 +242,7 @@ default_smg:
 
 default_shotgun:
     type: item
-    material: base_gun
+    material: testing_gun
     display name: <gold>Default Shotgun
     flags:
         gun_data:
@@ -293,7 +275,7 @@ default_shotgun:
 
 double_barrel:
     type: item
-    material: base_gun
+    material: testing_gun
     display name: <dark_blue>Double Barrel
     flags:
         gun_data:
